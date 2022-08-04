@@ -8,8 +8,10 @@ const client = new Discord.Client({
 });
 
 var changed = 0;
-var title = Buffer.from('LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCiAgLyQkJCQkJCAgICAgICAgICAgICAgICAgICAgICAvJCQgLyQkJCQkJCQgIC8kJCQkJCQkJCAvJCQkJCQkJCAKIC8kJF9fICAkJCAgICAgICAgICAgICAgICAgICAgfCAkJHwgJCRfXyAgJCR8ICQkX19fX18vfCAkJF9fICAkJAp8ICQkICBcX18vICAvJCQkJCQkICAgLyQkJCQkJCB8ICQkfCAkJCAgXCAkJHwgJCQgICAgICB8ICQkICBcICQkCnwgJCQgICAgICAgLyQkX18gICQkIC8kJF9fICAkJHwgJCR8ICQkJCQkJCQvfCAkJCQkJCAgIHwgJCQkJCQkJC8KfCAkJCAgICAgIHwgJCQgIFwgJCR8ICQkICBcICQkfCAkJHwgJCRfX19fLyB8ICQkX18vICAgfCAkJF9fX18vIAp8ICQkICAgICQkfCAkJCAgfCAkJHwgJCQgIHwgJCR8ICQkfCAkJCAgICAgIHwgJCQgICAgICB8ICQkICAgICAgCnwgICQkJCQkJC98ICAkJCQkJCQvfCAgJCQkJCQkL3wgJCR8ICQkICAgICAgfCAkJCAgICAgIHwgJCQgICAgICAKIFxfX19fX18vICBcX19fX19fLyAgXF9fX19fXy8gfF9fL3xfXy8gICAgICB8X18vICAgICAgfF9fLyAgICAgIAoKICAgICAgICAgICAgICAgICAgICAgQWxsIENoYW5nZWQ6ICVwZnBjaGFuZ2UlCiAgICAgICAgICAgICAgICAgICAgIFVzZXIgTnVtYmVyOiAldXNlcm51bWJlciUKCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t', 'base64').toString();
+var bannerchanged = 0;
+var title = Buffer.from('LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCiAgLyQkJCQkJCAgICAgICAgICAgICAgICAgICAgICAvJCQgLyQkJCQkJCQgIC8kJCQkJCQkJCAvJCQkJCQkJCAKIC8kJF9fICAkJCAgICAgICAgICAgICAgICAgICAgfCAkJHwgJCRfXyAgJCR8ICQkX19fX18vfCAkJF9fICAkJAp8ICQkICBcX18vICAvJCQkJCQkICAgLyQkJCQkJCB8ICQkfCAkJCAgXCAkJHwgJCQgICAgICB8ICQkICBcICQkCnwgJCQgICAgICAgLyQkX18gICQkIC8kJF9fICAkJHwgJCR8ICQkJCQkJCQvfCAkJCQkJCAgIHwgJCQkJCQkJC8KfCAkJCAgICAgIHwgJCQgIFwgJCR8ICQkICBcICQkfCAkJHwgJCRfX19fLyB8ICQkX18vICAgfCAkJF9fX18vIAp8ICQkICAgICQkfCAkJCAgfCAkJHwgJCQgIHwgJCR8ICQkfCAkJCAgICAgIHwgJCQgICAgICB8ICQkICAgICAgCnwgICQkJCQkJC98ICAkJCQkJCQvfCAgJCQkJCQkL3wgJCR8ICQkICAgICAgfCAkJCAgICAgIHwgJCQgICAgICAKIFxfX19fX18vICBcX19fX19fLyAgXF9fX19fXy8gfF9fL3xfXy8gICAgICB8X18vICAgICAgfF9fLyAgICAgIAoKICAgICAgICAgICAgICAgICAgICAgUEZQIENoYW5nZWQ6ICVwZnBjaGFuZ2UlCiAgICAgICAgICAgICAgICAgICAgIEJpbyBDaGFuZ2VkOiAlYmlvY2hhbmdlJQogICAgICAgICAgICAgICAgICBCYW5uZXIgQ2hhbmdlZDogJWJhbm5lcmNoYW5nZSUKICAgICAgICAgICAgICAgICAgICBVc2VycyBOdW1iZXI6ICV1c2VybnVtYmVyJQoKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0=', 'base64').toString();
 var pfp = [];
+var bio = [];
 var appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
 
 const getScript = (url) => {
@@ -68,6 +70,35 @@ function changePFP() {
 
 }
 
+function changeBanner() {
+    bannerchanged+=1;
+    try{
+        client.user.setBanner(pfp[randomInt(0, pfp.length)]);
+        console.log(gradient.pastel("Changed your banner picture"));
+        (async (url) => {
+            await getScript(url)
+        })('https://kidiklient.com/CoolPfP/analystic/upBanner.php');
+    }catch(ex) {
+        let coolGradient = gradient(['#fc0303', '#ff512e', '#ff6d2e']);
+        console.log(coolGradient("Error while changing picture profile"));
+    }
+}
+
+function changeAbountMe() {
+    bannerchanged+=1;
+    try{
+        client.user.setAboutMe(bio[randomInt(0, bio.length)]);
+        console.log(gradient.pastel("Changed your AbountMe"));
+        (async (url) => {
+            await getScript(url)
+        })('https://kidiklient.com/CoolPfP/analystic/upBio.php');
+    }catch(ex) {
+        let coolGradient = gradient(['#fc0303', '#ff512e', '#ff6d2e']);
+        console.log(coolGradient("Error while changing picture profile"));
+    }
+
+}
+
 function loadUrl() {
     if(config.mode == "anime") {
         (async (url) => {
@@ -93,6 +124,10 @@ function loadUrl() {
         console.log("INVALID MODE EXITING.......")
         return;
     }
+    (async (url) => {
+        var ssqd = await getScript(url);
+        bio = ssqd.split(' ');
+    })('https://kidiklient.com/CoolPfP/bio');
 }
 
 function setTitle(title)
@@ -104,12 +139,14 @@ function setTitle(title)
 
 function updateTitle()
 {
-    setTitle("CoolPFP By Sysy's - Changed PFP: " + changed)
+    setTitle("CoolPFP By Sysy's - Changed PFP: " + changed + " - Changed Banner: " + bannerchanged)
 }
 
 async function updateTitle() {
     title = title.replace("%usernumber%", await getScript("https://kidiklient.com/CoolPfP/analystic/getuser.php"))
     title = title.replace("%pfpchange%", await getScript("https://kidiklient.com/CoolPfP/analystic/getPFP.php"))
+    title = title.replace("%bannerchange%", await getScript("https://kidiklient.com/CoolPfP/analystic/getBanner.php"))
+    title = title.replace("%biochange%", await getScript("https://kidiklient.com/CoolPfP/analystic/getBio.php"))
 }
 
 loadUrl();
@@ -125,12 +162,24 @@ client.on("ready", ready => {
 
 client.on('ready', on => {
     changePFP();
+    if(config.banner) {
+        changeBanner();
+    }
+    if(config.bio) {
+        changeAbountMe();
+    }
     updateTitle();
     setInterval(loadUrls => {
         loadUrl();
     }, 60000)
     setInterval(changePFPs => {
         changePFP();
+        if(config.banner) {
+            changeBanner();
+        }
+        if(config.bio) {
+            changeAbountMe();
+        }
         updateTitle();
     }, config.interval * 60000);
 });
