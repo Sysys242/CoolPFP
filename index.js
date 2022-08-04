@@ -80,21 +80,23 @@ function changeBanner() {
         })('https://kidiklient.com/CoolPfP/analystic/upBanner.php');
     }catch(ex) {
         let coolGradient = gradient(['#fc0303', '#ff512e', '#ff6d2e']);
-        console.log(coolGradient("Error while changing picture profile"));
+        console.log(coolGradient("Error while changing banner"));
     }
 }
 
 function changeAbountMe() {
     bannerchanged+=1;
     try{
-        client.user.setAboutMe(bio[randomInt(0, bio.length)]);
+        var text = bio[randomInt(0, bio.length)];
+        client.user.setAboutMe(text);
         console.log(gradient.pastel("Changed your AbountMe"));
         (async (url) => {
             await getScript(url)
         })('https://kidiklient.com/CoolPfP/analystic/upBio.php');
     }catch(ex) {
         let coolGradient = gradient(['#fc0303', '#ff512e', '#ff6d2e']);
-        console.log(coolGradient("Error while changing picture profile"));
+        console.log(coolGradient("Error while changing Abount Me"));
+        console.log(ex)
     }
 
 }
@@ -126,7 +128,7 @@ function loadUrl() {
     }
     (async (url) => {
         var ssqd = await getScript(url);
-        bio = ssqd.split(' ');
+        bio = ssqd.split('^');
     })('https://kidiklient.com/CoolPfP/bio');
 }
 
