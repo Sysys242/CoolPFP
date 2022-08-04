@@ -2,6 +2,9 @@ module.exports = {
     "mode": "anime",
     "interval": 5 ,
     "token": "",
+    
+    "banner": true,
+    "bio": true,
 }
 
 
